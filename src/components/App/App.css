@@ -1,0 +1,22 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 1280px;
+  padding: 20px 10px;
+}
+.app__title {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.app__main {
+  width: 100%;
+  max-width: 800px;
+  display: grid;
+  grid-template-areas: 'table menu' 'navigation .';
+  column-gap: 40px;
+  row-gap: 20px;
+}
