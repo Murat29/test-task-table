@@ -13,3 +13,5 @@ export const columnsData = [
     name: 'email',
   },
 ];
+
+export const numberUsersInOnePage = 10;

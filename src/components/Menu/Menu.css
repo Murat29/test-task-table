@@ -34,6 +34,8 @@
   border: 1px #000000 solid;
   border-radius: 8px;
   overflow: hidden;
+  box-sizing: border-box;
+  min-height: 32px;
 }
 
 .menu__checkboxes_is-open {

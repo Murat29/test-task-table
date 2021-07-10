@@ -4,7 +4,7 @@ import Menu from '../Menu/Menu';
 import Navigation from '../Navigation/Navigation';
 import Popup from '../Popup/Popup';
 import testData from '../../utils/testData.json';
-import { columnsData } from '../../utils/constants';
+import { columnsData, numberUsersInOnePage } from '../../utils/constants';
 import './App.css';
 
 function App() {
@@ -16,10 +16,25 @@ function App() {
       return acc;
     }, {})
   );
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [maxPages, setMaxPages] = React.useState(10);
 
   React.useEffect(() => {
     setUsers(testData.results);
-  }, []);
+    setMaxPages(users.length / numberUsersInOnePage);
+    // fetch('https://api.randomuser.me/?results=68')
+    //   .then((res) => res.json())
+    //   .then((res) => console.log(res));
+  }, [users]);
+
+  function handleBtnDelete(i) {
+    users.splice(i, 1);
+    setUsers([...users]);
+  }
+
+  function handlePageNumberButton(i) {
+    setCurrentPage(i);
+  }
 
   function handleChangeCheckbox(e) {
     if (displayedСolumns[e.target.name]) {
@@ -61,9 +76,15 @@ function App() {
           displayedСolumns={displayedСolumns}
           sortUsers={sortUsersAlphabetically}
           sortUsersReverse={sortUsersReverseAlphabetical}
+          handleBtnDelete={handleBtnDelete}
+          currentPage={currentPage}
         />
         <Menu checkedCheckbox={displayedСolumns} handleChangeCheckbox={handleChangeCheckbox} />
-        <Navigation />
+        <Navigation
+          currentPage={currentPage}
+          maxPages={maxPages}
+          handlePageNumberButton={handlePageNumberButton}
+        />
         <Popup />
       </main>
     </div>

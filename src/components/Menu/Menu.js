@@ -5,6 +5,7 @@ import './Menu.css';
 
 function Menu({ checkedCheckbox, handleChangeCheckbox }) {
   const [isOpenCheckboxes, setIsOpenCheckboxes] = React.useState(false);
+  const [searchCheckboxValue, setSearchCheckboxValue] = React.useState('');
 
   return (
     <aside className="menu">
@@ -20,23 +21,34 @@ function Menu({ checkedCheckbox, handleChangeCheckbox }) {
         }}
         className="menu__multiselect"
       >
-        <input className="menu__input" type="text" />
+        <input
+          onChange={(e) => setSearchCheckboxValue(e.target.value)}
+          className="menu__input"
+          type="text"
+        />
         <div className={`menu__checkboxes ${isOpenCheckboxes && 'menu__checkboxes_is-open'}`}>
-          {columnsData.map((data) => (
-            <label
-              key={data.name}
-              className="menu__checkbox-container"
-              tabIndex="0"
-              htmlFor={data.name}
-            >
-              <Checkbox
-                checked={checkedCheckbox[data.name]}
-                handleChange={handleChangeCheckbox}
-                id={data.name}
-              />
-              {data.title}
-            </label>
-          ))}
+          {columnsData.map((data) => {
+            const isDisplayed = data.title
+              .toLowerCase()
+              .includes(searchCheckboxValue.toLowerCase());
+            return (
+              isDisplayed && (
+                <label
+                  key={data.name}
+                  className="menu__checkbox-container"
+                  tabIndex="0"
+                  htmlFor={data.name}
+                >
+                  <Checkbox
+                    checked={checkedCheckbox[data.name]}
+                    handleChange={handleChangeCheckbox}
+                    id={data.name}
+                  />
+                  {data.title}
+                </label>
+              )
+            );
+          })}
         </div>
       </div>
     </aside>
