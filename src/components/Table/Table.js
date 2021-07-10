@@ -1,7 +1,5 @@
 import React from 'react';
-import sortDefaultIcon from '../../images/sort-default.png';
-import sortAlphabeticallyIcon from '../../images/sort-alphabetically.png';
-import sortAlphabeticallyReverseIcon from '../../images/sort-alphabetically-reverse.png';
+
 import cross from '../../images/cross.svg';
 import { columnsData, numberUsersInOnePage } from '../../utils/constants';
 import './Table.css';
@@ -9,17 +7,16 @@ import './Table.css';
 function Table({
   users,
   displayedСolumns,
-  sortUsers,
-  sortUsersReverse,
   handleBtnDelete,
   handleClickUser,
   currentPage,
+  handleClickSort,
+  currentSortIcon,
 }) {
   const [displayedUsers, setDisplayedUsers] = React.useState(
     users.slice(currentPage * numberUsersInOnePage - 10, currentPage * numberUsersInOnePage)
   );
   const [currentLineHover, setCurrentLineHover] = React.useState(-1);
-  const [currentSortIcon, setCurrentSortIcon] = React.useState(sortDefaultIcon);
 
   React.useEffect(() => {
     setDisplayedUsers(
@@ -39,18 +36,6 @@ function Table({
     setCurrentLineHover(-1);
   }
 
-  function handleClickSort() {
-    let newIcon;
-    if (currentSortIcon !== sortAlphabeticallyIcon) {
-      sortUsers();
-      newIcon = sortAlphabeticallyIcon;
-    } else {
-      sortUsersReverse();
-      newIcon = sortAlphabeticallyReverseIcon;
-    }
-    setCurrentSortIcon(newIcon);
-  }
-
   return (
     <table className="table">
       <tbody>
@@ -58,7 +43,10 @@ function Table({
           {columnsData.map((data) => {
             return (
               displayedСolumns[data.name] && (
-                <th key={data.name} className="table__header">
+                <th
+                  key={data.name}
+                  className={`table__header ${'table__header_type_' + data.name}`}
+                >
                   {data.title}
                   {data.isBtnSort && (
                     <button onClick={handleClickSort} className="table__btn table__btn_type_sort">
@@ -82,27 +70,25 @@ function Table({
             return (
               <tr
                 tabIndex="0"
-                onClick={(e) => {
-                  handleClickUser(fullIndex);
-                  e.target.blur();
-                }}
                 onMouseOver={(event) => handlerLineMouseOver(event, i)}
                 onMouseOut={handlerLineMouseOut}
                 key={uuid}
                 className={`table__line ${i === currentLineHover && 'table__line_hover'}`}
               >
                 {displayedСolumns[columnsData[0].name] && (
-                  <td className="table__cell table__cell_type_name">
+                  <td onClick={(e) => handleClickUser(fullIndex)} className="table__cell">
                     {title} {first} {last}
                   </td>
                 )}
                 {displayedСolumns[columnsData[1].name] && (
-                  <td className="table__cell table__cell_type_gender">
+                  <td onClick={(e) => handleClickUser(fullIndex)} className="table__cell">
                     {gender === 'female' ? 'женский' : 'мужской'}
                   </td>
                 )}
                 {displayedСolumns[columnsData[2].name] && (
-                  <td className="table__cell table__cell_type_email">{email}</td>
+                  <td onClick={(e) => handleClickUser(fullIndex)} className="table__cell">
+                    {email}
+                  </td>
                 )}
                 <td className="table__cell_type_delete">
                   <button

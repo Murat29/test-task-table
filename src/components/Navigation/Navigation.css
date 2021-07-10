@@ -18,6 +18,12 @@
   border-radius: 5px;
 }
 
+@media screen and (max-width: 750px) {
+  .navigation__btn {
+    padding: 3px 5px;
+  }
+}
+
 .navigation__btn:focus,
 .navigation__btn:hover {
   border-color: #000000;

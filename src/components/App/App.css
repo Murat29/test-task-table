@@ -17,7 +17,24 @@
   max-width: 800px;
   display: grid;
   grid-template-areas: 'table menu' 'navigation .';
+  justify-content: space-between;
   align-items: flex-start;
   column-gap: 40px;
   row-gap: 20px;
+}
+
+@media screen and (max-width: 750px) {
+  .app__main {
+    grid-template-areas: 'menu' 'table' 'navigation';
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .app__main {
+    overflow: scroll;
+
+    justify-content: flex-start;
+  }
 }

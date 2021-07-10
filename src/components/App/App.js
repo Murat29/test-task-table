@@ -3,8 +3,11 @@ import Table from '../Table/Table';
 import Menu from '../Menu/Menu';
 import Navigation from '../Navigation/Navigation';
 import Popup from '../Popup/Popup';
-import testData from '../../utils/testData.json';
 import { columnsData, numberUsersInOnePage } from '../../utils/constants';
+import sortDefaultIcon from '../../images/sort-default.png';
+import sortAlphabeticallyIcon from '../../images/sort-alphabetically.png';
+import sortAlphabeticallyReverseIcon from '../../images/sort-alphabetically-reverse.png';
+import api from '../../utils/api';
 import './App.css';
 
 function App() {
@@ -17,23 +20,62 @@ function App() {
     }, {})
   );
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [maxPages, setMaxPages] = React.useState(10);
+  const [maxPages, setMaxPages] = React.useState(1);
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [popupData, setPopupData] = React.useState({});
+  const [inputValue, setInputValue] = React.useState('');
+  const [currentSortIcon, setCurrentSortIcon] = React.useState(sortDefaultIcon);
 
   React.useEffect(() => {
-    setUsers(testData.results);
-    setMaxPages(users.length / numberUsersInOnePage);
-    // fetch('https://api.randomuser.me/?results=68')
-    //   .then((res) => res.json())
-    //   .then((res) => console.log(res));
+    const storedInputValue = localStorage.getItem('inputValue') || '';
+    setInputValue(storedInputValue);
+    updateUsers(storedInputValue);
+  }, []);
+
+  React.useEffect(() => {
+    setMaxPages(Math.ceil(users.length / numberUsersInOnePage) || 1);
   }, [users]);
+
+  async function updateUsers(number) {
+    let newUser = [];
+    if (Number(number)) {
+      async function fetchData() {
+        newUser = await api.getUsers(number).then((data) => data.results);
+      }
+      await fetchData();
+    }
+    setUsers(newUser);
+    setCurrentSortIcon(sortDefaultIcon);
+  }
 
   function handleBtnDelete(i) {
     users.splice(i, 1);
     setUsers([...users]);
+    setInputValue(inputValue - 1);
   }
 
+  function handleClickSort() {
+    let newIcon;
+    if (currentSortIcon !== sortAlphabeticallyIcon) {
+      sortUsersAlphabetically();
+      newIcon = sortAlphabeticallyIcon;
+    } else {
+      sortUsersReverseAlphabetical();
+      newIcon = sortAlphabeticallyReverseIcon;
+    }
+    setCurrentSortIcon(newIcon);
+  }
+
+  function handleChangeInput(number) {
+    let newValue = inputValue;
+    console.log(number[0]);
+    if (/[0-9]/.test(number) || number === '') {
+      newValue = number;
+      localStorage.setItem('inputValue', number);
+    }
+    setInputValue(newValue);
+    updateUsers(newValue);
+  }
   function handleClickUser(i) {
     setPopupData({
       name: returnFullName(users[i]),
@@ -92,13 +134,18 @@ function App() {
         <Table
           users={users}
           displayedСolumns={displayedСolumns}
-          sortUsers={sortUsersAlphabetically}
-          sortUsersReverse={sortUsersReverseAlphabetical}
           handleBtnDelete={handleBtnDelete}
           handleClickUser={handleClickUser}
           currentPage={currentPage}
+          handleClickSort={handleClickSort}
+          currentSortIcon={currentSortIcon}
         />
-        <Menu checkedCheckbox={displayedСolumns} handleChangeCheckbox={handleChangeCheckbox} />
+        <Menu
+          checkedCheckbox={displayedСolumns}
+          handleChangeCheckbox={handleChangeCheckbox}
+          inputValue={inputValue}
+          handleChangeInput={handleChangeInput}
+        />
         <Navigation
           currentPage={currentPage}
           maxPages={maxPages}

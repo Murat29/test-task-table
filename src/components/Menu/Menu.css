@@ -1,10 +1,41 @@
 .menu {
-  margin-left: auto;
-  max-width: 150px;
   grid-area: menu;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+@media screen and (max-width: 750px) {
+  .menu {
+    max-width: max-content;
+    align-items: flex-end;
+    flex-direction: row;
+    gap: 10px;
+  }
+}
+.menu__input-container {
+  max-width: 150px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 750px) {
+  .menu__input-container {
+    min-height: 180px;
+    max-width: min-content;
+  }
+
+  .menu__input-container_multiselect {
+    padding-top: 19px;
+  }
 }
 
 .menu__text {
+  margin: 0;
+}
+
+@media screen and (max-width: 750px) {
+  .menu__text {
+    font-size: 14px;
+  }
 }
 
 .menu__input {
@@ -20,6 +51,7 @@
   font-weight: normal;
   font-size: 13px;
   line-height: 16px;
+  max-height: 30px;
 }
 
 .menu__input:focus {
@@ -48,6 +80,12 @@
   gap: 10px;
   padding: 5px;
   cursor: pointer;
+}
+
+@media screen and (max-width: 750px) {
+  .menu__checkbox-container {
+    font-size: 14px;
+  }
 }
 
 .menu__checkbox-container:hover,
