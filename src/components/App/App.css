@@ -17,6 +17,7 @@
   max-width: 800px;
   display: grid;
   grid-template-areas: 'table menu' 'navigation .';
+  align-items: flex-start;
   column-gap: 40px;
   row-gap: 20px;
 }

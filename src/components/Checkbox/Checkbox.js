@@ -1,18 +1,15 @@
 import React from 'react';
 import './Checkbox.css';
-function Checkbox({ id }) {
-  const [isChecked, setIsChecked] = React.useState(false);
-
+function Checkbox({ id, checked, handleChange }) {
   return (
     <label className="checkbox">
       <input
-        onChange={() => {
-          setIsChecked(!isChecked);
-        }}
-        checked={isChecked}
+        onChange={handleChange}
+        checked={checked}
         className="checkbox__invisible-checkbox"
         type="checkbox"
         id={id}
+        name={id}
         tabIndex="-1"
       />
       <span className="checkbox__visible-checkbox"></span>

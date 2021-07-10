@@ -1,8 +1,9 @@
 import React from 'react';
 import Checkbox from '../Checkbox/Checkbox';
+import { columnsData } from '../../utils/constants';
 import './Menu.css';
 
-function Menu() {
+function Menu({ checkedCheckbox, handleChangeCheckbox }) {
   const [isOpenCheckboxes, setIsOpenCheckboxes] = React.useState(false);
 
   return (
@@ -21,18 +22,21 @@ function Menu() {
       >
         <input className="menu__input" type="text" />
         <div className={`menu__checkboxes ${isOpenCheckboxes && 'menu__checkboxes_is-open'}`}>
-          <label className="menu__checkbox-container" tabIndex="0" htmlFor="name">
-            <Checkbox id="name" />
-            Имя
-          </label>
-          <label className="menu__checkbox-container" tabIndex="0" htmlFor="gender">
-            <Checkbox id="gender" />
-            Пол
-          </label>
-          <label className="menu__checkbox-container" tabIndex="0" htmlFor="email">
-            <Checkbox id="email" />
-            E-mail
-          </label>
+          {columnsData.map((data) => (
+            <label
+              key={data.name}
+              className="menu__checkbox-container"
+              tabIndex="0"
+              htmlFor={data.name}
+            >
+              <Checkbox
+                checked={checkedCheckbox[data.name]}
+                handleChange={handleChangeCheckbox}
+                id={data.name}
+              />
+              {data.title}
+            </label>
+          ))}
         </div>
       </div>
     </aside>

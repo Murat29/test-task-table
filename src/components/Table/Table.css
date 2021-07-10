@@ -6,7 +6,7 @@
   width: fit-content;
   grid-area: table;
 }
-.table__heading {
+.table__header {
   font-weight: normal;
   font-size: 14px;
   color: #ffffff;
@@ -79,7 +79,7 @@
   background-color: #cce1f0;
 }
 
-.table__heading,
+.table__header,
 .table__cell {
   white-space: pre-wrap;
   padding: 10px 5px;
