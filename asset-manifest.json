@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/test-task-table/static/css/main.d143d212.chunk.css",
+    "main.js": "/test-task-table/static/js/main.ba13ff8f.chunk.js",
+    "main.js.map": "/test-task-table/static/js/main.ba13ff8f.chunk.js.map",
+    "runtime-main.js": "/test-task-table/static/js/runtime-main.711adc03.js",
+    "runtime-main.js.map": "/test-task-table/static/js/runtime-main.711adc03.js.map",
+    "static/js/2.e6107736.chunk.js": "/test-task-table/static/js/2.e6107736.chunk.js",
+    "static/js/2.e6107736.chunk.js.map": "/test-task-table/static/js/2.e6107736.chunk.js.map",
+    "static/js/3.20b70ce5.chunk.js": "/test-task-table/static/js/3.20b70ce5.chunk.js",
+    "static/js/3.20b70ce5.chunk.js.map": "/test-task-table/static/js/3.20b70ce5.chunk.js.map",
+    "index.html": "/test-task-table/index.html",
+    "static/css/main.d143d212.chunk.css.map": "/test-task-table/static/css/main.d143d212.chunk.css.map",
+    "static/js/2.e6107736.chunk.js.LICENSE.txt": "/test-task-table/static/js/2.e6107736.chunk.js.LICENSE.txt",
+    "static/media/cross.fdd2fd05.svg": "/test-task-table/static/media/cross.fdd2fd05.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.711adc03.js",
+    "static/js/2.e6107736.chunk.js",
+    "static/css/main.d143d212.chunk.css",
+    "static/js/main.ba13ff8f.chunk.js"
+  ]
+}
