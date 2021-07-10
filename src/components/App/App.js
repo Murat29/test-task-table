@@ -18,6 +18,8 @@ function App() {
   );
   const [currentPage, setCurrentPage] = React.useState(1);
   const [maxPages, setMaxPages] = React.useState(10);
+  const [isOpenPopup, setIsOpenPopup] = React.useState(false);
+  const [popupData, setPopupData] = React.useState({});
 
   React.useEffect(() => {
     setUsers(testData.results);
@@ -30,6 +32,22 @@ function App() {
   function handleBtnDelete(i) {
     users.splice(i, 1);
     setUsers([...users]);
+  }
+
+  function handleClickUser(i) {
+    setPopupData({
+      name: returnFullName(users[i]),
+      email: users[i].email,
+      gender: users[i].gender === 'female' ? 'женский' : 'мужской',
+      location: `${users[i].location.country} ${users[i].location.state} ${users[i].location.city}`,
+      street: `${users[i].location.street.name} ${users[i].location.street.number}`,
+      picture: users[i].picture.medium,
+    });
+    setIsOpenPopup(true);
+  }
+
+  function closePopup() {
+    setIsOpenPopup(false);
   }
 
   function handlePageNumberButton(i) {
@@ -77,6 +95,7 @@ function App() {
           sortUsers={sortUsersAlphabetically}
           sortUsersReverse={sortUsersReverseAlphabetical}
           handleBtnDelete={handleBtnDelete}
+          handleClickUser={handleClickUser}
           currentPage={currentPage}
         />
         <Menu checkedCheckbox={displayedСolumns} handleChangeCheckbox={handleChangeCheckbox} />
@@ -85,7 +104,7 @@ function App() {
           maxPages={maxPages}
           handlePageNumberButton={handlePageNumberButton}
         />
-        <Popup />
+        {isOpenPopup && <Popup isOpen={isOpenPopup} data={popupData} closePopup={closePopup} />}
       </main>
     </div>
   );

@@ -12,6 +12,7 @@ function Table({
   sortUsers,
   sortUsersReverse,
   handleBtnDelete,
+  handleClickUser,
   currentPage,
 }) {
   const [displayedUsers, setDisplayedUsers] = React.useState(
@@ -75,11 +76,16 @@ function Table({
         </tr>
         {displayedUsers.map(
           ({ name: { title, first, last }, gender, email, login: { uuid } }, i) => {
+            const fullIndex = (currentPage - 1) * numberUsersInOnePage + i;
             // Здесь очень важен порядок ячеек(td). Он должен быть такой же, как в columnsData
             // Иначе могут скрыться разные header столбца и его ячейки
             return (
               <tr
                 tabIndex="0"
+                onClick={(e) => {
+                  handleClickUser(fullIndex);
+                  e.target.blur();
+                }}
                 onMouseOver={(event) => handlerLineMouseOver(event, i)}
                 onMouseOut={handlerLineMouseOut}
                 key={uuid}
@@ -98,9 +104,9 @@ function Table({
                 {displayedСolumns[columnsData[2].name] && (
                   <td className="table__cell table__cell_type_email">{email}</td>
                 )}
-                <td className="table__cell_delete">
+                <td className="table__cell_type_delete">
                   <button
-                    onClick={() => handleBtnDelete((currentPage - 1) * numberUsersInOnePage + i)}
+                    onClick={() => handleBtnDelete(fullIndex)}
                     className="table__btn table__btn_type_delete"
                   >
                     <img className="table__img-delete" src={cross} alt="Удалить запись." />
