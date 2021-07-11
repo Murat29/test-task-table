@@ -27,7 +27,7 @@ function App() {
   const [currentSortIcon, setCurrentSortIcon] = React.useState(sortDefaultIcon);
 
   React.useEffect(() => {
-    const storedInputValue = localStorage.getItem('inputValue') || '';
+    const storedInputValue = localStorage.getItem('inputValue' || '');
     setInputValue(storedInputValue);
     updateUsers(storedInputValue);
   }, []);
@@ -131,15 +131,17 @@ function App() {
     <div className="app">
       <h1 className="app__title">Рандомные пользователи</h1>
       <main className="app__main">
-        <Table
-          users={users}
-          displayedСolumns={displayedСolumns}
-          handleBtnDelete={handleBtnDelete}
-          handleClickUser={handleClickUser}
-          currentPage={currentPage}
-          handleClickSort={handleClickSort}
-          currentSortIcon={currentSortIcon}
-        />
+        <div className="app__table-container">
+          <Table
+            users={users}
+            displayedСolumns={displayedСolumns}
+            handleBtnDelete={handleBtnDelete}
+            handleClickUser={handleClickUser}
+            currentPage={currentPage}
+            handleClickSort={handleClickSort}
+            currentSortIcon={currentSortIcon}
+          />
+        </div>
         <Menu
           checkedCheckbox={displayedСolumns}
           handleChangeCheckbox={handleChangeCheckbox}
